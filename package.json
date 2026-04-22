@@ -16,9 +16,10 @@
   "engines": {
     "node": ">=20"
   },
+  "packageManager": "pnpm@10.33.1",
   "scripts": {
-    "build": "npm run build:package",
-    "build:package": "tsc --build --force && tsc -p tsconfig.theme.json && npm run copy:assets",
+    "build": "pnpm run build:package",
+    "build:package": "tsc --build --force && tsc -p tsconfig.theme.json && pnpm run copy:assets",
     "copy:assets": "node ./scripts/copy-assets.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -28,7 +29,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.check.json",
-    "validate": "npm run format:check && npm run lint && npm run test && npm run typecheck && npm run build && npm run pack:check"
+    "validate": "pnpm run format:check && pnpm run lint && pnpm run test && pnpm run typecheck && pnpm run build && pnpm run pack:check"
   },
   "peerDependencies": {
     "@docusaurus/core": "^3.0.0",
