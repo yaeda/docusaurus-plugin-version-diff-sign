@@ -1,23 +1,20 @@
+import { cp, mkdtemp, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import {cp, mkdtemp, rm} from 'node:fs/promises';
 
-import {afterEach, describe, expect, it} from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 
-import {generateDiffMetadata} from '../../../src/core/metadata.js';
-import {normalizeOptions} from '../../../src/options.js';
+import { generateDiffMetadata } from '../../../src/core/metadata.js';
+import { normalizeOptions } from '../../../src/options.js';
 
-const fixtureRoot = path.resolve(
-  __dirname,
-  '../../fixtures/versioned-site',
-);
+const fixtureRoot = path.resolve(__dirname, '../../fixtures/versioned-site');
 
 const tempDirs: string[] = [];
 
 afterEach(async () => {
   await Promise.all(
     tempDirs.map(async (dirPath) => {
-      await rm(dirPath, {recursive: true, force: true});
+      await rm(dirPath, { recursive: true, force: true });
     }),
   );
   tempDirs.length = 0;
@@ -28,10 +25,17 @@ describe('generateDiffMetadata', () => {
     const siteDir = await mkdtemp(path.join(os.tmpdir(), 'version-diff-sign-'));
     tempDirs.push(siteDir);
 
-    await cp(path.join(fixtureRoot, 'versioned_docs'), path.join(siteDir, 'versioned_docs'), {
-      recursive: true,
-    });
-    await cp(path.join(fixtureRoot, 'versions.json'), path.join(siteDir, 'versions.json'));
+    await cp(
+      path.join(fixtureRoot, 'versioned_docs'),
+      path.join(siteDir, 'versioned_docs'),
+      {
+        recursive: true,
+      },
+    );
+    await cp(
+      path.join(fixtureRoot, 'versions.json'),
+      path.join(siteDir, 'versions.json'),
+    );
 
     const options = normalizeOptions(siteDir, {});
 
@@ -46,8 +50,8 @@ describe('generateDiffMetadata', () => {
     expect(startEntry.headings['a-1'].state).toBe('updated');
     expect(startEntry.headings['fresh-section'].state).toBe('new');
     expect(overrideEntry.pageState).toBe('none');
-    expect(
-      metadata.docsByPermalink['/docs/guide/override'],
-    ).toBe('2.0.0:guide/override');
+    expect(metadata.docsByPermalink['/docs/guide/override']).toBe(
+      '2.0.0:guide/override',
+    );
   });
 });

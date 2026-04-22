@@ -1,4 +1,4 @@
-import {access, mkdir, readdir, readFile, writeFile} from 'node:fs/promises';
+import { access, mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 export async function pathExists(filePath: string): Promise<boolean> {
@@ -15,13 +15,16 @@ export async function readJsonFile<T>(filePath: string): Promise<T> {
   return JSON.parse(raw) as T;
 }
 
-export async function writeJsonFile(filePath: string, value: unknown): Promise<void> {
-  await mkdir(path.dirname(filePath), {recursive: true});
+export async function writeJsonFile(
+  filePath: string,
+  value: unknown,
+): Promise<void> {
+  await mkdir(path.dirname(filePath), { recursive: true });
   await writeFile(filePath, JSON.stringify(value, null, 2), 'utf8');
 }
 
 export async function listMarkdownFiles(rootDir: string): Promise<string[]> {
-  const entries = await readdir(rootDir, {withFileTypes: true});
+  const entries = await readdir(rootDir, { withFileTypes: true });
   const files = await Promise.all(
     entries.map(async (entry) => {
       const nextPath = path.join(rootDir, entry.name);

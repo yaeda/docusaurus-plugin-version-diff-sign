@@ -1,8 +1,9 @@
-import React from 'react';
 import Link from '@docusaurus/Link';
-import {useDoc} from '@docusaurus/plugin-content-docs/client';
+import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import VersionDiffSign from '@version-diff-sign-renderer-toc';
+import React from 'react';
+
 import {
   getSignTargetOptions,
   isConfiguredHeadingLevel,
@@ -10,7 +11,7 @@ import {
   toVisibleState,
   useVersionDiffPluginData,
 } from '../../runtime/pluginData.js';
-import type {DocEntryMetadata, PluginGlobalData} from '../../types.js';
+import type { DocEntryMetadata, PluginGlobalData } from '../../types.js';
 
 interface TocHeading {
   id: string;
@@ -74,7 +75,7 @@ function TOCItemTreeNodes({
               <span
                 className="version-diff-sign__toc-link"
                 // Developer provided the HTML, so assume it's safe.
-                dangerouslySetInnerHTML={{__html: heading.value}}
+                dangerouslySetInnerHTML={{ __html: heading.value }}
               />
               {headingState ? (
                 <VersionDiffSign
@@ -105,8 +106,8 @@ function TOCItemTreeNodes({
 }
 
 export default React.memo(function TOCItemTree(props: TocTreeProps) {
-  const {metadata} = useDoc() as DocPageData;
-  const {siteConfig, i18n} = useDocusaurusContext() as DocusaurusContextValue;
+  const { metadata } = useDoc() as DocPageData;
+  const { siteConfig, i18n } = useDocusaurusContext() as DocusaurusContextValue;
   const pluginData = useVersionDiffPluginData();
   const doc = resolveDocByPermalink(pluginData, metadata.permalink, {
     baseUrl: siteConfig.baseUrl,

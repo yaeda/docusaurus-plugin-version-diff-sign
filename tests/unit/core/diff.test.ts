@@ -1,7 +1,11 @@
-import {describe, expect, it} from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import {buildDiffMetadata} from '../../../src/core/diff.js';
-import type {DocSectionSnapshot, DocSnapshot, VersionDiffFrontMatter} from '../../../src/types.js';
+import { buildDiffMetadata } from '../../../src/core/diff.js';
+import type {
+  DocSectionSnapshot,
+  DocSnapshot,
+  VersionDiffFrontMatter,
+} from '../../../src/types.js';
 
 interface CreateDocInput {
   versionName?: string;
@@ -83,9 +87,14 @@ describe('buildDiffMetadata', () => {
         unversionedId: 'guide/start',
         titleContent: 'Intro text',
         sections: [
-          {id: 'page-title', title: 'Page Title', level: 1, content: 'Intro text'},
-          {id: 'a', title: 'A', level: 2, content: 'Stable text'},
-          {id: 'a-1', title: 'A-1', level: 3, content: 'Old text'},
+          {
+            id: 'page-title',
+            title: 'Page Title',
+            level: 1,
+            content: 'Intro text',
+          },
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Old text' },
         ],
       }),
     ];
@@ -94,21 +103,28 @@ describe('buildDiffMetadata', () => {
         unversionedId: 'guide/start',
         titleContent: 'Intro text',
         sections: [
-          {id: 'page-title', title: 'Page Title', level: 1, content: 'Intro text'},
-          {id: 'a', title: 'A', level: 2, content: 'Stable text'},
-          {id: 'a-1', title: 'A-1', level: 3, content: 'Changed text'},
+          {
+            id: 'page-title',
+            title: 'Page Title',
+            level: 1,
+            content: 'Intro text',
+          },
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Changed text' },
         ],
       }),
     ];
 
-    const metadata = buildMetadata({currentDocs, previousDocs});
+    const metadata = buildMetadata({ currentDocs, previousDocs });
     const entry = metadata.docs['2.0.0:guide/start'];
 
     expect(entry.titleState).toBe('none');
     expect(entry.pageState).toBe('updated');
     expect(entry.headings.a.state).toBe('none');
     expect(entry.headings['a-1'].state).toBe('updated');
-    expect(metadata.docsByPermalink['/docs/guide/start']).toBe('2.0.0:guide/start');
+    expect(metadata.docsByPermalink['/docs/guide/start']).toBe(
+      '2.0.0:guide/start',
+    );
   });
 
   it('marks a page as new only when the page itself is missing previously', () => {
@@ -116,7 +132,12 @@ describe('buildDiffMetadata', () => {
       createDoc({
         unversionedId: 'guide/new-page',
         sections: [
-          {id: 'page-title', title: 'Page Title', level: 1, content: 'Intro text'},
+          {
+            id: 'page-title',
+            title: 'Page Title',
+            level: 1,
+            content: 'Intro text',
+          },
         ],
       }),
     ];
@@ -164,7 +185,7 @@ describe('buildDiffMetadata', () => {
       }),
     ];
 
-    const metadata = buildMetadata({currentDocs, previousDocs});
+    const metadata = buildMetadata({ currentDocs, previousDocs });
     const entry = metadata.docs['2.0.0:guide/override'];
 
     expect(entry.titleState).toBe('none');
@@ -212,7 +233,7 @@ describe('buildDiffMetadata', () => {
       }),
     ];
 
-    const metadata = buildMetadata({currentDocs, previousDocs});
+    const metadata = buildMetadata({ currentDocs, previousDocs });
     const entry = metadata.docs['2.0.0:guide/override'];
 
     expect(entry.titleState).toBe('none');
@@ -228,8 +249,8 @@ describe('buildDiffMetadata', () => {
         versionName: '1.0.0',
         unversionedId: 'guide/start',
         sections: [
-          {id: 'a', title: 'A', level: 2, content: 'Stable text'},
-          {id: 'a-1', title: 'A-1', level: 3, content: 'Old text'},
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Old text' },
         ],
       }),
     ];
@@ -237,8 +258,8 @@ describe('buildDiffMetadata', () => {
       createDoc({
         unversionedId: 'guide/start',
         sections: [
-          {id: 'a', title: 'A', level: 2, content: 'Stable text'},
-          {id: 'a-1', title: 'A-1', level: 3, content: 'Changed text'},
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Changed text' },
         ],
       }),
     ];

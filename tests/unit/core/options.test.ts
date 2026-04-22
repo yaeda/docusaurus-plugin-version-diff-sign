@@ -1,6 +1,6 @@
-import {describe, expect, it} from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-import {normalizeOptions, toPublicOptions} from '../../../src/options.js';
+import { normalizeOptions, toPublicOptions } from '../../../src/options.js';
 
 describe('normalizeOptions', () => {
   it('applies documented defaults and resolves paths from the site dir', () => {

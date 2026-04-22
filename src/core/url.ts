@@ -7,7 +7,9 @@ export function normalizePathname(pathname: string): string {
   return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
 }
 
-export function joinUrlSegments(...segments: Array<string | undefined>): string {
+export function joinUrlSegments(
+  ...segments: Array<string | undefined>
+): string {
   const filtered = segments
     .filter((segment): segment is string => Boolean(segment))
     .map((segment) => segment.replace(/^\/+|\/+$/gu, ''))

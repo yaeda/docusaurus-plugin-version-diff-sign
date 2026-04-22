@@ -1,4 +1,4 @@
-export {default} from './plugin.js';
+export { default } from './plugin.js';
 export type {
   DiffState,
   DocEntryMetadata,

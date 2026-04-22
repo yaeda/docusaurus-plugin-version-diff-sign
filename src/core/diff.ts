@@ -1,5 +1,4 @@
-import {METADATA_SCHEMA_VERSION} from '../constants.js';
-import {joinUrlSegments} from './url.js';
+import { METADATA_SCHEMA_VERSION } from '../constants.js';
 import type {
   DiffOverrideState,
   DiffState,
@@ -10,6 +9,7 @@ import type {
   VersionInfo,
   VisibleDiffState,
 } from '../types.js';
+import { joinUrlSegments } from './url.js';
 
 type DiffBuildOptions = {
   headingLevels: number[];
@@ -83,12 +83,13 @@ function deriveTitleState(
   previous: DocSnapshot | undefined,
   options: Pick<DiffBuildOptions, 'ignoreWhitespace'>,
 ): DiffState {
-  const currentTitleSection = current.sections.find((section) => section.level === 1);
+  const currentTitleSection = current.sections.find(
+    (section) => section.level === 1,
+  );
 
   if (currentTitleSection) {
     const previousTitleSection = previous?.sections.find(
-      (section) =>
-        section.level === 1 && section.id === currentTitleSection.id,
+      (section) => section.level === 1 && section.id === currentTitleSection.id,
     );
 
     if (!previousTitleSection) {

@@ -1,18 +1,14 @@
-import {ParseCache} from './cache.js';
-import {buildDiffMetadata} from './diff.js';
-import {
-  listMarkdownFiles,
-  pathExists,
-  writeJsonFile,
-} from './fs.js';
-import {parseDocSnapshot} from './markdown.js';
-import {getRelevantVersions} from './versions.js';
 import type {
   DocSnapshot,
   GeneratedMetadata,
   NormalizedPluginOptions,
   VersionInfo,
 } from '../types.js';
+import { ParseCache } from './cache.js';
+import { buildDiffMetadata } from './diff.js';
+import { listMarkdownFiles, pathExists, writeJsonFile } from './fs.js';
+import { parseDocSnapshot } from './markdown.js';
+import { getRelevantVersions } from './versions.js';
 
 async function loadVersionSnapshots(
   version: VersionInfo | undefined,
@@ -34,10 +30,7 @@ async function loadVersionSnapshots(
       continue;
     }
 
-    const snapshot = await parseDocSnapshot(
-      filePath,
-      version,
-    );
+    const snapshot = await parseDocSnapshot(filePath, version);
     await cache.set(filePath, snapshot);
     snapshots.push(snapshot);
   }
@@ -48,7 +41,7 @@ async function loadVersionSnapshots(
 export async function generateDiffMetadata(
   options: NormalizedPluginOptions,
 ): Promise<GeneratedMetadata> {
-  const {current, previous} = await getRelevantVersions(options);
+  const { current, previous } = await getRelevantVersions(options);
   const cache = await ParseCache.load(options.paths.cacheFile);
   const [currentDocs, previousDocs] = await Promise.all([
     loadVersionSnapshots(current, options, cache),

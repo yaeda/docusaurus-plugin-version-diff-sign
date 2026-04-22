@@ -13,7 +13,7 @@ It computes diff metadata at build time and uses that metadata at runtime to dec
 Minimal setup:
 
 ```ts
-import type {Config} from '@docusaurus/types';
+import type { Config } from '@docusaurus/types';
 
 const config: Config = {
   plugins: ['docusaurus-plugin-version-diff-sign'],
@@ -32,7 +32,7 @@ Example with options:
 This disables TOC signs and changes the built-in sign colors for headings and sidebar items.
 
 ```ts
-import type {Config} from '@docusaurus/types';
+import type { Config } from '@docusaurus/types';
 
 const config: Config = {
   plugins: [
@@ -116,7 +116,7 @@ Choose the lightest customization that fits your use case:
 If you only want to adjust the built-in sign color, configure `sign.<target>.color`:
 
 ```ts
-import type {Config} from '@docusaurus/types';
+import type { Config } from '@docusaurus/types';
 
 const config: Config = {
   plugins: [
@@ -175,7 +175,7 @@ The default renderer attaches stable target and state classes so you can restyle
 To replace the built-in sign renderer for a specific target, point `sign.<target>.componentPath` at a component in your site:
 
 ```ts
-import type {Config} from '@docusaurus/types';
+import type { Config } from '@docusaurus/types';
 
 const config: Config = {
   plugins: [
@@ -199,7 +199,7 @@ export default config;
 Example custom renderer:
 
 ```tsx
-import type {VersionDiffRendererProps} from 'docusaurus-plugin-version-diff-sign';
+import type { VersionDiffRendererProps } from 'docusaurus-plugin-version-diff-sign';
 
 export default function VersionDiffBadge({
   state,
@@ -224,7 +224,8 @@ export default function VersionDiffBadge({
         fontSize: type === 'pill' ? '0.75rem' : '0.625rem',
         fontWeight: 700,
         marginInlineStart: '0.5rem',
-      }}>
+      }}
+    >
       {state === 'new' ? 'NEW' : 'UPDATED'}
     </span>
   );
