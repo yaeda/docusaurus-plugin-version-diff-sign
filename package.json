@@ -1,0 +1,52 @@
+{
+  "name": "docusaurus-plugin-version-diff-sign",
+  "version": "1.0.0",
+  "description": "Adds version diff signs to Docusaurus docs headings, sidebar items, and table of contents entries.",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "npm run build:package",
+    "build:package": "tsc --build --force && tsc -p tsconfig.theme.json && npm run copy:assets",
+    "copy:assets": "node ./scripts/copy-assets.mjs",
+    "pack:check": "npm_config_cache=./.npm-cache npm pack --dry-run",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.check.json",
+    "validate": "npm run test && npm run typecheck && npm run build && npm run pack:check"
+  },
+  "peerDependencies": {
+    "@docusaurus/core": "^3.0.0",
+    "@docusaurus/plugin-content-docs": "^3.0.0",
+    "@docusaurus/theme-common": "^3.0.0",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "github-slugger": "^2.0.0",
+    "gray-matter": "^4.0.3",
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "unified": "^11.0.5"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10.0",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  }
+}

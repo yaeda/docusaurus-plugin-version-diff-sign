@@ -1,0 +1,102 @@
+:root {
+  --version-diff-sign-new-color: var(--ifm-color-primary);
+  --version-diff-sign-updated-color: var(--ifm-color-primary);
+  --version-diff-sign-dot-color: var(--ifm-color-primary);
+  --version-diff-sign-dot-size: 0.42rem;
+  --version-diff-sign-gap: 0.35rem;
+  --version-diff-sign-inline-offset: 0.45rem;
+  --version-diff-sign-round-radius: 999px;
+  --version-diff-sign-pill-padding-block: 0.08rem;
+  --version-diff-sign-pill-padding-inline: 0.42rem;
+  --version-diff-sign-pill-font-size: 0.6em;
+  --version-diff-sign-pill-font-weight: 700;
+}
+
+.version-diff-sign__content {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--version-diff-sign-gap);
+}
+
+.version-diff-sign__inline {
+  display: inline-flex;
+}
+
+.version-diff-sign.is-dot.version-diff-sign__inline {
+  align-self: center;
+}
+
+.version-diff-sign.in-sidebar.version-diff-sign__inline {
+  flex: none;
+  margin-inline-start: var(--version-diff-sign-inline-offset);
+}
+
+.version-diff-sign.in-toc.version-diff-sign__inline {
+  margin-inline-start: var(--version-diff-sign-inline-offset);
+  vertical-align: middle;
+}
+
+.version-diff-sign.is-dot {
+  display: inline-flex;
+  width: var(--version-diff-sign-dot-size);
+  height: var(--version-diff-sign-dot-size);
+  border-radius: var(--version-diff-sign-round-radius);
+  background: var(--version-diff-sign-color, var(--version-diff-sign-dot-color));
+  flex: none;
+}
+
+.version-diff-sign.is-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--version-diff-sign-pill-padding-block)
+    var(--version-diff-sign-pill-padding-inline);
+  border: 1px solid transparent;
+  border-radius: var(--version-diff-sign-round-radius);
+  font-size: var(--version-diff-sign-pill-font-size);
+  font-weight: var(--version-diff-sign-pill-font-weight);
+  letter-spacing: 0.06em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.version-diff-sign__sidebar-link-label {
+  flex: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.version-diff-sign.is-pill.is-new {
+  color: var(--version-diff-sign-color, var(--version-diff-sign-new-color));
+  border-color: color-mix(
+    in srgb,
+    var(--version-diff-sign-color, var(--version-diff-sign-new-color)) 28%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--version-diff-sign-color, var(--version-diff-sign-new-color)) 12%,
+    white
+  );
+}
+
+.version-diff-sign.is-pill.is-updated {
+  color: var(
+    --version-diff-sign-color,
+    var(--version-diff-sign-updated-color)
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--version-diff-sign-color, var(--version-diff-sign-updated-color)) 28%,
+    transparent
+  );
+  background: color-mix(
+    in srgb,
+    var(--version-diff-sign-color, var(--version-diff-sign-updated-color)) 12%,
+    white
+  );
+}

@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "lib": ["ES2022", "DOM"],
+    "jsx": "react-jsx",
+    "composite": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "allowJs": false,
+    "strict": true,
+    "noEmit": false,
+    "outDir": "lib",
+    "rootDir": "src",
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "types": ["node", "@docusaurus/module-type-aliases"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx"]
+}

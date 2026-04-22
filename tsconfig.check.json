@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": true,
+    "outDir": "./.tsbuild-unused",
+    "rootDir": ".",
+    "types": ["node", "@docusaurus/module-type-aliases", "vitest/globals"]
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "tests/**/*.ts",
+    "vitest.config.ts"
+  ]
+}

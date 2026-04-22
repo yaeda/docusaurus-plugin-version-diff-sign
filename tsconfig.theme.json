@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ES2022",
+    "moduleResolution": "Bundler",
+    "declaration": false,
+    "composite": false,
+    "noCheck": true,
+    "rootDir": "src",
+    "outDir": "lib"
+  },
+  "include": [
+    "src/runtime/**/*.ts",
+    "src/runtime/**/*.tsx",
+    "src/theme/**/*.ts",
+    "src/theme/**/*.tsx"
+  ]
+}
