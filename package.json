@@ -20,11 +20,15 @@
     "build": "npm run build:package",
     "build:package": "tsc --build --force && tsc -p tsconfig.theme.json && npm run copy:assets",
     "copy:assets": "node ./scripts/copy-assets.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "pack:check": "npm_config_cache=./.npm-cache npm pack --dry-run",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit -p tsconfig.check.json",
-    "validate": "npm run test && npm run typecheck && npm run build && npm run pack:check"
+    "validate": "npm run format:check && npm run lint && npm run test && npm run typecheck && npm run build && npm run pack:check"
   },
   "peerDependencies": {
     "@docusaurus/core": "^3.0.0",
@@ -43,10 +47,16 @@
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.10.0",
+    "@eslint/js": "^10.0.1",
     "@types/node": "^22.15.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "prettier": "^3.8.3",
     "typescript": "^5.8.3",
+    "typescript-eslint": "^8.59.0",
     "vitest": "^3.1.2"
   }
 }
