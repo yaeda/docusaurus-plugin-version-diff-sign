@@ -1,7 +1,8 @@
 import path from 'node:path';
-import {describe, expect, it} from 'vitest';
 
-import {parseDocSnapshot} from '../../../src/core/markdown.js';
+import { describe, expect, it } from 'vitest';
+
+import { parseDocSnapshot } from '../../../src/core/markdown.js';
 
 const fixtureRoot = path.resolve(
   __dirname,

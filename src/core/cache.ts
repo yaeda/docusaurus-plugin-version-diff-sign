@@ -1,11 +1,16 @@
-import {readFile} from 'node:fs/promises';
-import {pathExists, readJsonFile, writeJsonFile} from './fs.js';
-import {hashContent} from './hash.js';
+import { readFile } from 'node:fs/promises';
+
 import {
   PARSE_CACHE_LOGIC_VERSION,
   PARSE_CACHE_SCHEMA_VERSION,
 } from '../constants.js';
-import type {DocSnapshot, ParsedCacheEntry, ParsedCacheFile} from '../types.js';
+import type {
+  DocSnapshot,
+  ParsedCacheEntry,
+  ParsedCacheFile,
+} from '../types.js';
+import { pathExists, readJsonFile, writeJsonFile } from './fs.js';
+import { hashContent } from './hash.js';
 
 export class ParseCache {
   #cacheFile: string;

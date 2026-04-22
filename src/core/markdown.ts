@@ -1,16 +1,18 @@
+import { readFile } from 'node:fs/promises';
 import path from 'node:path';
-import {readFile} from 'node:fs/promises';
+
 import GithubSlugger from 'github-slugger';
 import matter from 'gray-matter';
 import remarkMdx from 'remark-mdx';
 import remarkParse from 'remark-parse';
-import {unified} from 'unified';
-import {normalizePathname} from './url.js';
+import { unified } from 'unified';
+
 import type {
   DocSectionSnapshot,
   DocSnapshot,
   VersionDiffFrontMatter,
 } from '../types.js';
+import { normalizePathname } from './url.js';
 
 interface MdastNode {
   type: string;
@@ -55,7 +57,10 @@ function toPosixPath(filePath: string): string {
   return filePath.replace(/\\/gu, '/');
 }
 
-function getBaseId(relativePath: string, frontMatter: VersionDiffFrontMatter): string {
+function getBaseId(
+  relativePath: string,
+  frontMatter: VersionDiffFrontMatter,
+): string {
   if (typeof frontMatter.id === 'string' && frontMatter.id.length > 0) {
     return frontMatter.id;
   }
@@ -83,8 +88,10 @@ function buildDefaultSlug(
   const baseId = getBaseId(normalizedRelativePath, frontMatter);
 
   const lastSegment =
-    path.posix.basename(normalizedRelativePath, path.posix.extname(normalizedRelativePath)) ===
-      'index' && typeof frontMatter.id !== 'string'
+    path.posix.basename(
+      normalizedRelativePath,
+      path.posix.extname(normalizedRelativePath),
+    ) === 'index' && typeof frontMatter.id !== 'string'
       ? ''
       : baseId;
 
@@ -178,7 +185,7 @@ function collectLeadingNodes(root: RootNode): MdastNode[] {
 
 export async function parseDocSnapshot(
   filePath: string,
-  version: {name: string; docsDir: string},
+  version: { name: string; docsDir: string },
 ): Promise<DocSnapshot> {
   const rawContent = await readFile(filePath, 'utf8');
   const parsed = matter(rawContent);
@@ -200,7 +207,7 @@ export async function parseDocSnapshot(
     title:
       typeof frontMatter.title === 'string' && frontMatter.title.length > 0
         ? frontMatter.title
-        : fallbackTitle ?? unversionedId,
+        : (fallbackTitle ?? unversionedId),
     frontMatter,
     pageContent: parsed.content.trim(),
     titleContent: serializeNodes(collectLeadingNodes(tree)).trim(),

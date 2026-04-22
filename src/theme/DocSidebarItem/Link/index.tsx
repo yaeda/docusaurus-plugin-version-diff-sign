@@ -1,12 +1,13 @@
-import React from 'react';
-import clsx from 'clsx';
-import {ThemeClassNames} from '@docusaurus/theme-common';
-import {isActiveSidebarItem} from '@docusaurus/plugin-content-docs/client';
-import Link from '@docusaurus/Link';
 import isInternalUrl from '@docusaurus/isInternalUrl';
-import IconExternalLink from '@theme/Icon/ExternalLink';
+import Link from '@docusaurus/Link';
+import { isActiveSidebarItem } from '@docusaurus/plugin-content-docs/client';
+import { ThemeClassNames } from '@docusaurus/theme-common';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import IconExternalLink from '@theme/Icon/ExternalLink';
 import VersionDiffSign from '@version-diff-sign-renderer-sidebar';
+import clsx from 'clsx';
+import React from 'react';
+
 import {
   getSignTargetOptions,
   resolveSidebarItemDoc,
@@ -38,7 +39,7 @@ interface DocusaurusContextValue {
   };
 }
 
-function LinkLabel({label}: {label: string}) {
+function LinkLabel({ label }: { label: string }) {
   return (
     <span title={label} className="version-diff-sign__sidebar-link-label">
       {label}
@@ -51,15 +52,17 @@ export default function DocSidebarItemLink({
   onItemClick,
   activePath,
   level,
-  index,
   ...props
 }: SidebarLinkProps) {
-  const {href, label, className, autoAddBaseUrl} = item;
+  const { href, label, className, autoAddBaseUrl } = item;
   const isActive = isActiveSidebarItem(item, activePath);
   const isInternalLink = isInternalUrl(href);
   const pluginData = useVersionDiffPluginData();
-  const sidebarSignOptions = getSignTargetOptions(pluginData.options, 'sidebar');
-  const {siteConfig, i18n} = useDocusaurusContext() as DocusaurusContextValue;
+  const sidebarSignOptions = getSignTargetOptions(
+    pluginData.options,
+    'sidebar',
+  );
+  const { siteConfig, i18n } = useDocusaurusContext() as DocusaurusContextValue;
   const doc =
     pluginData.options.targets.sidebar && isInternalLink
       ? resolveSidebarItemDoc(pluginData, item, {
@@ -77,7 +80,8 @@ export default function DocSidebarItemLink({
         'menu__list-item',
         className,
       )}
-      key={label}>
+      key={label}
+    >
       <Link
         className={clsx('menu__link', {
           'menu__link--active': isActive,
@@ -88,16 +92,17 @@ export default function DocSidebarItemLink({
         {...(isInternalLink && {
           onClick: onItemClick ? () => onItemClick(item) : undefined,
         })}
-        {...props}>
+        {...props}
+      >
         <LinkLabel label={label} />
-            {pageState ? (
-              <VersionDiffSign
-                state={pageState}
-                target="sidebar"
-                type={sidebarSignOptions.type}
-                color={sidebarSignOptions.color}
-                docId={doc?.unversionedId}
-                className="version-diff-sign__inline"
+        {pageState ? (
+          <VersionDiffSign
+            state={pageState}
+            target="sidebar"
+            type={sidebarSignOptions.type}
+            color={sidebarSignOptions.color}
+            docId={doc?.unversionedId}
+            className="version-diff-sign__inline"
           />
         ) : null}
         {!isInternalLink && <IconExternalLink />}

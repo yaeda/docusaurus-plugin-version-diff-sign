@@ -1,7 +1,8 @@
-import type {ComponentProps} from 'react';
-import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import VersionDiffSign from '@version-diff-sign-renderer-heading';
+import clsx from 'clsx';
+import type { ComponentProps } from 'react';
+
 import {
   getSignTargetOptions,
   getVersionDiffClassName,
@@ -25,7 +26,10 @@ export default function MDXHeading(props: HeadingProps) {
   const currentDoc = useCurrentDocDiff();
   const pluginData = useVersionDiffPluginData();
   const headingLevel = toHeadingLevel(props.as);
-  const headingSignOptions = getSignTargetOptions(pluginData.options, 'heading');
+  const headingSignOptions = getSignTargetOptions(
+    pluginData.options,
+    'heading',
+  );
 
   if (
     !currentDoc ||
@@ -38,9 +42,12 @@ export default function MDXHeading(props: HeadingProps) {
 
   const headingState =
     headingLevel === 1
-      ? toVisibleState(props.id ? currentDoc.headings[props.id]?.state : undefined) ??
-        toVisibleState(currentDoc.titleState)
-      : toVisibleState(props.id ? currentDoc.headings[props.id]?.state : undefined);
+      ? (toVisibleState(
+          props.id ? currentDoc.headings[props.id]?.state : undefined,
+        ) ?? toVisibleState(currentDoc.titleState))
+      : toVisibleState(
+          props.id ? currentDoc.headings[props.id]?.state : undefined,
+        );
 
   if (!headingState) {
     return <Heading {...props} />;
@@ -51,8 +58,13 @@ export default function MDXHeading(props: HeadingProps) {
       {...props}
       className={clsx(
         props.className,
-        getVersionDiffClassName('heading', headingState, headingSignOptions.type),
-      )}>
+        getVersionDiffClassName(
+          'heading',
+          headingState,
+          headingSignOptions.type,
+        ),
+      )}
+    >
       <span className="version-diff-sign__content">
         {props.children}
         <VersionDiffSign

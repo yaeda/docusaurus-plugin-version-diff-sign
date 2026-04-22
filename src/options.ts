@@ -1,15 +1,15 @@
 import path from 'node:path';
+
 import {
   DEFAULT_HEADING_LEVELS,
-  DOCUSAURUS_VERSIONED_DOCS_DIR,
   DOCUSAURUS_VERSION_DIR_PREFIX,
+  DOCUSAURUS_VERSIONED_DOCS_DIR,
   DOCUSAURUS_VERSIONS_FILE,
 } from './constants.js';
 import type {
   NormalizedPluginOptions,
   PluginUserOptions,
   PublicPluginOptions,
-  SignType,
   SignTargetOptions,
   VersionDiffTarget,
 } from './types.js';
@@ -19,7 +19,12 @@ function uniqueHeadingLevels(levels: number[]): number[] {
 }
 
 function isHeadingLevel(value: unknown): value is number {
-  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 6;
+  return (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= 1 &&
+    value <= 6
+  );
 }
 
 function normalizeSignTarget(
@@ -28,11 +33,7 @@ function normalizeSignTarget(
   target?: Partial<SignTargetOptions>,
 ): SignTargetOptions {
   return {
-    type:
-      target?.type ??
-      (targetName === 'heading'
-        ? 'pill'
-        : 'dot'),
+    type: target?.type ?? (targetName === 'heading' ? 'pill' : 'dot'),
     color: target?.color,
     componentPath: target?.componentPath
       ? path.resolve(siteDir, target.componentPath)
@@ -45,7 +46,9 @@ export function normalizeOptions(
   options: PluginUserOptions = {},
 ): NormalizedPluginOptions {
   const headingLevels = uniqueHeadingLevels(
-    (options.headingLevels ?? [...DEFAULT_HEADING_LEVELS]).filter(isHeadingLevel),
+    (options.headingLevels ?? [...DEFAULT_HEADING_LEVELS]).filter(
+      isHeadingLevel,
+    ),
   );
 
   return {
@@ -69,7 +72,10 @@ export function normalizeOptions(
       cacheFile: path.resolve(
         siteDir,
         options.paths?.cacheFile ??
-          path.join('.docusaurus', 'docusaurus-plugin-version-diff-sign.cache.json'),
+          path.join(
+            '.docusaurus',
+            'docusaurus-plugin-version-diff-sign.cache.json',
+          ),
       ),
     },
   };

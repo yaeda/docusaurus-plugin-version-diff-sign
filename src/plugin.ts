@@ -1,11 +1,13 @@
 import path from 'node:path';
-import {PLUGIN_NAME} from './constants.js';
-import {
-  generateDiffMetadata,
-  writeMetadataFile,
-} from './core/metadata.js';
-import {normalizeOptions, toPublicOptions} from './options.js';
-import type {GeneratedMetadata, PluginGlobalData, PluginUserOptions} from './types.js';
+
+import { PLUGIN_NAME } from './constants.js';
+import { generateDiffMetadata, writeMetadataFile } from './core/metadata.js';
+import { normalizeOptions, toPublicOptions } from './options.js';
+import type {
+  GeneratedMetadata,
+  PluginGlobalData,
+  PluginUserOptions,
+} from './types.js';
 
 interface PluginContext {
   siteDir: string;
@@ -33,11 +35,7 @@ const themePath = path.join(packageDir, 'theme');
 const clientStylesPath = path.join(packageDir, 'client', 'styles.css');
 const defaultMetadataFilePath = (siteDir: string) =>
   path.resolve(siteDir, '.docusaurus', 'version-diff-metadata.json');
-const defaultRendererPath = path.join(
-  themePath,
-  'VersionDiffSign',
-  'index.js',
-);
+const defaultRendererPath = path.join(themePath, 'VersionDiffSign', 'index.js');
 
 export default function versionDiffPlugin(
   context: PluginContext,
@@ -61,7 +59,7 @@ export default function versionDiffPlugin(
       );
       return metadata;
     },
-    async contentLoaded({content, actions}: ContentLoadedArgs) {
+    async contentLoaded({ content, actions }: ContentLoadedArgs) {
       actions.setGlobalData({
         metadata: content,
         options: toPublicOptions(options),

@@ -42,7 +42,10 @@
   width: var(--version-diff-sign-dot-size);
   height: var(--version-diff-sign-dot-size);
   border-radius: var(--version-diff-sign-round-radius);
-  background: var(--version-diff-sign-color, var(--version-diff-sign-dot-color));
+  background: var(
+    --version-diff-sign-color,
+    var(--version-diff-sign-dot-color)
+  );
   flex: none;
 }
 
@@ -85,10 +88,7 @@
 }
 
 .version-diff-sign.is-pill.is-updated {
-  color: var(
-    --version-diff-sign-color,
-    var(--version-diff-sign-updated-color)
-  );
+  color: var(--version-diff-sign-color, var(--version-diff-sign-updated-color));
   border-color: color-mix(
     in srgb,
     var(--version-diff-sign-color, var(--version-diff-sign-updated-color)) 28%,

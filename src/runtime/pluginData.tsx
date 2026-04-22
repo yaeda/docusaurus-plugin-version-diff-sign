@@ -1,12 +1,13 @@
-import {createContext, useContext} from 'react';
+import { usePluginData } from '@docusaurus/useGlobalData';
 import clsx from 'clsx';
-import {usePluginData} from '@docusaurus/useGlobalData';
+import { createContext, useContext } from 'react';
+
 import type {
   DocEntryMetadata,
   PluginGlobalData,
   PublicPluginOptions,
-  SignType,
   SignTargetOptions,
+  SignType,
   VersionDiffDocProviderProps,
   VersionDiffTarget,
   VisibleDiffState,
@@ -82,25 +83,25 @@ export function useVersionDiffPluginData(): PluginGlobalData {
 export function resolveDocByPermalink(
   pluginData: PluginGlobalData,
   permalink: string,
-  {baseUrl, locales}: RuntimeRouteContext,
+  { baseUrl, locales }: RuntimeRouteContext,
 ): DocEntryMetadata | null {
   const withoutBaseUrl = stripBaseUrl(permalink, baseUrl);
   const normalizedPermalink = stripLocalePrefix(withoutBaseUrl, locales);
   const key = pluginData.metadata.docsByPermalink[normalizedPermalink];
 
-  return key ? pluginData.metadata.docs[key] ?? null : null;
+  return key ? (pluginData.metadata.docs[key] ?? null) : null;
 }
 
 export function resolveSidebarItemDoc(
   pluginData: PluginGlobalData,
   item: SidebarItemRef,
-  {baseUrl, locales}: RuntimeRouteContext,
+  { baseUrl, locales }: RuntimeRouteContext,
 ): DocEntryMetadata | null {
   if (typeof item?.href !== 'string') {
     return null;
   }
 
-  return resolveDocByPermalink(pluginData, item.href, {baseUrl, locales});
+  return resolveDocByPermalink(pluginData, item.href, { baseUrl, locales });
 }
 
 export function toVisibleState(

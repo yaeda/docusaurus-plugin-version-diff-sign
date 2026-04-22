@@ -1,4 +1,4 @@
-import type {ReactNode} from 'react';
+import type { ReactNode } from 'react';
 
 export type VisibleDiffState = 'new' | 'updated';
 export type DiffState = 'none' | VisibleDiffState;
@@ -52,9 +52,9 @@ export interface PluginUserOptions {
   headingLevels?: number[];
   ignoreWhitespace?: boolean;
   sign?: {
-    heading?: Partial<Omit<SignTargetOptions, 'type'>> & {type?: SignType};
-    sidebar?: Partial<Omit<SignTargetOptions, 'type'>> & {type?: SignType};
-    toc?: Partial<Omit<SignTargetOptions, 'type'>> & {type?: SignType};
+    heading?: Partial<Omit<SignTargetOptions, 'type'>> & { type?: SignType };
+    sidebar?: Partial<Omit<SignTargetOptions, 'type'>> & { type?: SignType };
+    toc?: Partial<Omit<SignTargetOptions, 'type'>> & { type?: SignType };
   };
   paths?: Partial<PluginPathOptions>;
 }

@@ -1,19 +1,20 @@
-import type {ReactNode} from 'react';
-import clsx from 'clsx';
-import {ThemeClassNames} from '@docusaurus/theme-common';
-import {useDoc} from '@docusaurus/plugin-content-docs/client';
+import { useDoc } from '@docusaurus/plugin-content-docs/client';
+import { ThemeClassNames } from '@docusaurus/theme-common';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Heading from '@theme/Heading';
 import MDXContent from '@theme/MDXContent';
 import VersionDiffSign from '@version-diff-sign-renderer-heading';
+import clsx from 'clsx';
+import type { ReactNode } from 'react';
+
 import {
-  VersionDiffDocProvider,
   getSignTargetOptions,
   getVersionDiffClassName,
   isConfiguredHeadingLevel,
   resolveDocByPermalink,
   toVisibleState,
   useVersionDiffPluginData,
+  VersionDiffDocProvider,
 } from '../../../runtime/pluginData.js';
 
 interface DocPageData {
@@ -38,7 +39,7 @@ interface DocusaurusContextValue {
 }
 
 function useSyntheticTitle(): string | null {
-  const {metadata, frontMatter, contentTitle} = useDoc() as DocPageData;
+  const { metadata, frontMatter, contentTitle } = useDoc() as DocPageData;
   const shouldRender =
     !frontMatter.hide_title && typeof contentTitle === 'undefined';
 
@@ -49,16 +50,19 @@ function useSyntheticTitle(): string | null {
   return metadata.title;
 }
 
-export default function DocItemContent({children}: {children?: ReactNode}) {
-  const {metadata} = useDoc() as DocPageData;
-  const {siteConfig, i18n} = useDocusaurusContext() as DocusaurusContextValue;
+export default function DocItemContent({ children }: { children?: ReactNode }) {
+  const { metadata } = useDoc() as DocPageData;
+  const { siteConfig, i18n } = useDocusaurusContext() as DocusaurusContextValue;
   const pluginData = useVersionDiffPluginData();
   const syntheticTitle = useSyntheticTitle();
   const doc = resolveDocByPermalink(pluginData, metadata.permalink, {
     baseUrl: siteConfig.baseUrl,
     locales: i18n.locales,
   });
-  const headingSignOptions = getSignTargetOptions(pluginData.options, 'heading');
+  const headingSignOptions = getSignTargetOptions(
+    pluginData.options,
+    'heading',
+  );
   const titleState = toVisibleState(doc?.titleState);
   const canDecorateH1 =
     pluginData.options.targets.headings &&

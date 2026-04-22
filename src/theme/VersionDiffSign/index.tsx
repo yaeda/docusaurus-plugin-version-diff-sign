@@ -1,10 +1,10 @@
-import type {CSSProperties} from 'react';
-import clsx from 'clsx';
+import type { CSSProperties } from 'react';
+
 import {
   getVersionDiffClassName,
   useVersionDiffPluginData,
 } from '../../runtime/pluginData.js';
-import type {VersionDiffRendererProps} from '../../types.js';
+import type { VersionDiffRendererProps } from '../../types.js';
 
 function getLabel(state: VersionDiffRendererProps['state']): string {
   if (state === 'new') {
@@ -28,7 +28,7 @@ export default function VersionDiffSign({
   useVersionDiffPluginData();
   const signClassName = getVersionDiffClassName(target, state, type, className);
   const style = color
-    ? ({'--version-diff-sign-color': color} as CSSProperties)
+    ? ({ '--version-diff-sign-color': color } as CSSProperties)
     : undefined;
 
   if (type === 'dot') {

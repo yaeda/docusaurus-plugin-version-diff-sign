@@ -1,6 +1,7 @@
 import path from 'node:path';
-import {pathExists, readJsonFile} from './fs.js';
-import type {InternalPathsOptions, VersionInfo} from '../types.js';
+
+import type { InternalPathsOptions, VersionInfo } from '../types.js';
+import { pathExists, readJsonFile } from './fs.js';
 
 function toVersionDir(
   versionedDocsDir: string,
@@ -10,11 +11,12 @@ function toVersionDir(
   return path.join(versionedDocsDir, `${versionDirPrefix}${versionName}`);
 }
 
-export async function getRelevantVersions(
-  options: {
-    paths: Pick<InternalPathsOptions, 'versionsFile' | 'versionedDocsDir' | 'versionDirPrefix'>;
-  },
-): Promise<{current: VersionInfo; previous?: VersionInfo}> {
+export async function getRelevantVersions(options: {
+  paths: Pick<
+    InternalPathsOptions,
+    'versionsFile' | 'versionedDocsDir' | 'versionDirPrefix'
+  >;
+}): Promise<{ current: VersionInfo; previous?: VersionInfo }> {
   if (!(await pathExists(options.paths.versionsFile))) {
     throw new Error(
       `Expected versions file at "${options.paths.versionsFile}", but it was not found.`,
@@ -55,5 +57,5 @@ export async function getRelevantVersions(
       }
     : undefined;
 
-  return {current, previous};
+  return { current, previous };
 }

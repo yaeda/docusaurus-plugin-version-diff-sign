@@ -247,12 +247,15 @@ The current v1 plugin options are:
 
 ```md
 # Page Title
+
 Intro text
 
 ## A
+
 Stable text
 
 ### A-1
+
 Changed text
 ```
 
@@ -266,12 +269,15 @@ Expected behavior:
 
 ```md
 # Page Title
+
 Intro text
 
 ## A
+
 A intro
 
 ### A-1
+
 A-1 text
 ```
 
@@ -285,9 +291,11 @@ If only `A-1 text` changes:
 
 ```md
 # Page Title
+
 Changed introduction text
 
 ## A
+
 Stable text
 ```
 
