@@ -1,0 +1,34 @@
+:root {
+  --ifm-color-primary: #00554a;
+  --ifm-color-primary-dark: #004b42;
+  --ifm-color-primary-darker: #00463d;
+  --ifm-color-primary-darkest: #003930;
+  --ifm-color-primary-light: #005f52;
+  --ifm-color-primary-lighter: #006457;
+  --ifm-color-primary-lightest: #007566;
+  --ifm-code-font-size: 95%;
+}
+
+.hero--playground {
+  background:
+    radial-gradient(circle at top left, rgba(0, 85, 74, 0.18), transparent 34%),
+    linear-gradient(135deg, #f5fbf9 0%, #edf7f4 100%);
+}
+
+[data-theme='dark'] .hero--playground {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(75, 196, 176, 0.2),
+      transparent 34%
+    ),
+    linear-gradient(135deg, #0f1b18 0%, #102521 100%);
+}
+
+.playground-summary {
+  max-width: 48rem;
+}
+
+.playground-summary code {
+  white-space: nowrap;
+}
