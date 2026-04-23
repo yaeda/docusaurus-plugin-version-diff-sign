@@ -9,7 +9,6 @@ import type { ReactNode } from 'react';
 
 import {
   getSignTargetOptions,
-  getVersionDiffClassName,
   isConfiguredHeadingLevel,
   resolveDocByPermalink,
   toVisibleState,
@@ -67,17 +66,13 @@ export default function DocItemContent({ children }: { children?: ReactNode }) {
   const canDecorateH1 =
     pluginData.options.targets.headings &&
     isConfiguredHeadingLevel(pluginData.options, 1, doc);
-  const headingClassName =
-    canDecorateH1 && titleState
-      ? getVersionDiffClassName('heading', titleState, headingSignOptions.type)
-      : undefined;
 
   return (
     <VersionDiffDocProvider doc={doc}>
       <div className={clsx(ThemeClassNames.docs.docMarkdown, 'markdown')}>
         {syntheticTitle ? (
           <header>
-            <Heading as="h1" className={headingClassName}>
+            <Heading as="h1">
               <span className="version-diff-sign__content">
                 {syntheticTitle}
                 {titleState && canDecorateH1 ? (

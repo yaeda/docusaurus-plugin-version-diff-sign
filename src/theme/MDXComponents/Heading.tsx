@@ -1,11 +1,9 @@
 import Heading from '@theme/Heading';
 import VersionDiffSign from '@version-diff-sign-renderer-heading';
-import clsx from 'clsx';
 import type { ComponentProps } from 'react';
 
 import {
   getSignTargetOptions,
-  getVersionDiffClassName,
   isConfiguredHeadingLevel,
   toVisibleState,
   useCurrentDocDiff,
@@ -54,17 +52,7 @@ export default function MDXHeading(props: HeadingProps) {
   }
 
   return (
-    <Heading
-      {...props}
-      className={clsx(
-        props.className,
-        getVersionDiffClassName(
-          'heading',
-          headingState,
-          headingSignOptions.type,
-        ),
-      )}
-    >
+    <Heading {...props}>
       <span className="version-diff-sign__content">
         {props.children}
         <VersionDiffSign
