@@ -17,6 +17,35 @@ type DiffBuildOptions = {
   paths: Pick<PluginPathOptions, 'routeBasePath'>;
 };
 
+function isHeadingLevel(value: unknown): value is number {
+  return (
+    typeof value === 'number' &&
+    Number.isInteger(value) &&
+    value >= 1 &&
+    value <= 6
+  );
+}
+
+function normalizeHeadingLevels(levels: number[]): number[] {
+  return [...new Set(levels)].sort((left, right) => left - right);
+}
+
+function getDocHeadingLevels(
+  current: DocSnapshot,
+  defaultHeadingLevels: number[],
+): number[] {
+  const configuredHeadingLevels =
+    current.frontMatter.versionDiff?.headingLevels;
+
+  if (!Array.isArray(configuredHeadingLevels)) {
+    return defaultHeadingLevels;
+  }
+
+  const frontMatterHeadingLevels =
+    configuredHeadingLevels.filter(isHeadingLevel);
+  return normalizeHeadingLevels(frontMatterHeadingLevels);
+}
+
 function toVisibleState(
   value: DiffState | DiffOverrideState | undefined,
 ): VisibleDiffState | null {
@@ -137,9 +166,10 @@ function compareDoc(
   const previousHeadings = new Map(
     (previous?.sections ?? []).map((section) => [section.id, section]),
   );
+  const headingLevels = getDocHeadingLevels(current, options.headingLevels);
 
   const trackedHeadings = current.sections.filter((section) =>
-    options.headingLevels.includes(section.level),
+    headingLevels.includes(section.level),
   );
 
   const headings: Record<string, DocHeadingMetadata> = Object.fromEntries(
@@ -189,6 +219,7 @@ function compareDoc(
     unversionedId: current.unversionedId,
     sourcePath: current.sourcePath,
     permalink: buildPermalink(current.docPath, currentVersion, routeBasePath),
+    headingLevels,
     pageState,
     titleState,
     title: current.title,

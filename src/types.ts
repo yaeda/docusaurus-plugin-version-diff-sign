@@ -62,6 +62,7 @@ export interface PluginUserOptions {
 export interface VersionDiffFrontMatter {
   versionDiff?: {
     page?: DiffOverrideState;
+    headingLevels?: number[];
     headings?: Record<string, DiffOverrideState>;
   };
   id?: string;
@@ -111,6 +112,7 @@ export interface DocEntryMetadata {
   unversionedId: string;
   sourcePath: string;
   permalink: string;
+  headingLevels: number[];
   pageState: DiffState;
   titleState: DiffState;
   title: string;

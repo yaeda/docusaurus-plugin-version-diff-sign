@@ -65,7 +65,8 @@ function TOCItemTreeNodes({
     <ul className={isChild ? undefined : className}>
       {toc.map((heading) => {
         const headingState =
-          isConfiguredHeadingLevel(pluginData.options, heading.level) && doc
+          isConfiguredHeadingLevel(pluginData.options, heading.level, doc) &&
+          doc
             ? toVisibleState(doc.headings[heading.id]?.state)
             : null;
 

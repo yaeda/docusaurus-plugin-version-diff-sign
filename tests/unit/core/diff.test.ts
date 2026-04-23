@@ -150,6 +150,7 @@ describe('buildDiffMetadata', () => {
 
     expect(entry.pageState).toBe('new');
     expect(entry.titleState).toBe('new');
+    expect(entry.headingLevels).toEqual([1, 2, 3]);
   });
 
   it('uses title content for pages without an h1 and ignores whitespace-only changes by default', () => {
@@ -241,6 +242,156 @@ describe('buildDiffMetadata', () => {
     expect(entry.headings['request-connection-interval-change'].state).toBe(
       'updated',
     );
+  });
+
+  it('uses page frontmatter heading levels when tracking heading states', () => {
+    const previousDocs = [
+      createDoc({
+        versionName: '1.0.0',
+        unversionedId: 'guide/frontmatter-levels',
+        sections: [
+          {
+            id: 'page-title',
+            title: 'Page Title',
+            level: 1,
+            content: 'Intro text',
+          },
+          {
+            id: 'stable-section',
+            title: 'Stable Section',
+            level: 2,
+            content: 'Stable text',
+          },
+          {
+            id: 'changed-detail',
+            title: 'Changed Detail',
+            level: 3,
+            content: 'Old text',
+          },
+        ],
+      }),
+    ];
+    const currentDocs = [
+      createDoc({
+        unversionedId: 'guide/frontmatter-levels',
+        frontMatter: {
+          versionDiff: {
+            headingLevels: [2, 9, 2],
+          },
+        },
+        sections: [
+          {
+            id: 'page-title',
+            title: 'Page Title',
+            level: 1,
+            content: 'Intro text',
+          },
+          {
+            id: 'stable-section',
+            title: 'Stable Section',
+            level: 2,
+            content: 'Stable text',
+          },
+          {
+            id: 'changed-detail',
+            title: 'Changed Detail',
+            level: 3,
+            content: 'Changed text',
+          },
+        ],
+      }),
+    ];
+
+    const metadata = buildMetadata({
+      currentDocs,
+      previousDocs,
+    });
+    const entry = metadata.docs['2.0.0:guide/frontmatter-levels'];
+
+    expect(entry.headingLevels).toEqual([2]);
+    expect(entry.headings).toEqual({
+      'stable-section': {
+        id: 'stable-section',
+        title: 'Stable Section',
+        level: 2,
+        state: 'none',
+      },
+    });
+    expect(entry.pageState).toBe('none');
+  });
+
+  it('disables heading tracking when page frontmatter heading levels is empty', () => {
+    const previousDocs = [
+      createDoc({
+        versionName: '1.0.0',
+        unversionedId: 'guide/no-heading-levels',
+        sections: [
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Old text' },
+        ],
+      }),
+    ];
+    const currentDocs = [
+      createDoc({
+        unversionedId: 'guide/no-heading-levels',
+        frontMatter: {
+          versionDiff: {
+            headingLevels: [],
+          },
+        },
+        sections: [
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Changed text' },
+        ],
+      }),
+    ];
+
+    const metadata = buildMetadata({
+      currentDocs,
+      previousDocs,
+    });
+    const entry = metadata.docs['2.0.0:guide/no-heading-levels'];
+
+    expect(entry.headingLevels).toEqual([]);
+    expect(entry.headings).toEqual({});
+    expect(entry.pageState).toBe('none');
+  });
+
+  it('disables heading tracking when page frontmatter heading levels has no valid values', () => {
+    const previousDocs = [
+      createDoc({
+        versionName: '1.0.0',
+        unversionedId: 'guide/invalid-heading-levels',
+        sections: [
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Old text' },
+        ],
+      }),
+    ];
+    const currentDocs = [
+      createDoc({
+        unversionedId: 'guide/invalid-heading-levels',
+        frontMatter: {
+          versionDiff: {
+            headingLevels: [9],
+          },
+        },
+        sections: [
+          { id: 'a', title: 'A', level: 2, content: 'Stable text' },
+          { id: 'a-1', title: 'A-1', level: 3, content: 'Changed text' },
+        ],
+      }),
+    ];
+
+    const metadata = buildMetadata({
+      currentDocs,
+      previousDocs,
+    });
+    const entry = metadata.docs['2.0.0:guide/invalid-heading-levels'];
+
+    expect(entry.headingLevels).toEqual([]);
+    expect(entry.headings).toEqual({});
+    expect(entry.pageState).toBe('none');
   });
 
   it('filters heading states by configured heading levels', () => {

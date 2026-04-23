@@ -139,6 +139,7 @@ export function getSignTargetOptions(
 export function isConfiguredHeadingLevel(
   options: PublicPluginOptions,
   level: number,
+  doc?: DocEntryMetadata | null,
 ): boolean {
-  return options.headingLevels.includes(level);
+  return (doc?.headingLevels ?? options.headingLevels).includes(level);
 }

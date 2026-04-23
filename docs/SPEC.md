@@ -90,7 +90,7 @@ Current behavior:
 - If the heading exists and its own direct content changed, it is `updated`.
 - Otherwise, it is `none`.
 
-Tracked headings are controlled by `headingLevels`.
+Tracked headings are controlled by `headingLevels`. You can override that per page with `versionDiff.headingLevels`.
 
 ## Section Comparison Rules
 
@@ -136,6 +136,7 @@ Example:
 ```yaml
 ---
 versionDiff:
+  headingLevels: [2]
   page: updated
   headings:
     write-operations: none
@@ -146,9 +147,15 @@ versionDiff:
 ### Supported fields
 
 - `versionDiff.page`
+- `versionDiff.headingLevels`
 - `versionDiff.headings`
 
-### Supported values
+### `versionDiff.headingLevels`
+
+- Accepts an array of heading levels from `1` to `6`
+- Overrides the plugin-level tracked heading levels for that page
+
+### Supported override values for `versionDiff.page` and `versionDiff.headings.<headingId>`
 
 - `auto`
 - `none`
