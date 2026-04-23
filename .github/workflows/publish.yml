@@ -44,6 +44,12 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Ignore generated changelog in Prettier
+        run: |
+          if [ -f CHANGELOG.md ]; then
+            printf '\nCHANGELOG.md\n' >> .prettierignore
+          fi
+
       - name: Verify tag matches package version
         env:
           RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
