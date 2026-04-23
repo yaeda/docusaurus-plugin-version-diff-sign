@@ -5,6 +5,7 @@ on:
 
 permissions:
   contents: write
+  id-token: write
 
 concurrency:
   group: release
@@ -15,6 +16,9 @@ jobs:
     name: release
     if: github.ref_name == 'main'
     runs-on: ubuntu-latest
+    outputs:
+      release_tag: ${{ steps.release_meta.outputs.release_tag }}
+      release_version: ${{ steps.release_meta.outputs.release_version }}
 
     steps:
       - name: Checkout
@@ -31,6 +35,7 @@ jobs:
         with:
           node-version: 24
           cache: pnpm
+          registry-url: https://registry.npmjs.org
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -46,6 +51,16 @@ jobs:
       - name: Create release commit and tag
         run: pnpm exec changelogen --release --clean
 
+      - name: Run validation on release artifacts
+        run: pnpm run validate
+
+      - name: Capture release metadata
+        id: release_meta
+        run: |
+          VERSION="$(node -p 'require("./package.json").version')"
+          echo "release_version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "release_tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Push release commit and tag
         run: git push origin HEAD:main --follow-tags
 
@@ -53,5 +68,41 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
-          VERSION="$(node -p 'require("./package.json").version')"
-          pnpm exec changelogen gh release "$VERSION"
+          pnpm exec changelogen gh release "${{ steps.release_meta.outputs.release_version }}"
+
+  publish:
+    name: publish
+    needs: release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          ref: refs/tags/${{ needs.release.outputs.release_tag }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@8b2eead6074fefa43a68bf4c9e0f03ea4126b5ba # v6.0.3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+        with:
+          node-version: 24
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify tag matches package version
+        env:
+          RELEASE_TAG: ${{ needs.release.outputs.release_tag }}
+        run: |
+          node -e "const fs = require('node:fs'); const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8')); const expectedTag = 'v' + pkg.version; if (process.env.RELEASE_TAG !== expectedTag) { console.error('Tag/package version mismatch:', process.env.RELEASE_TAG, expectedTag); process.exit(1); }"
+
+      - name: Build package
+        run: pnpm run build
+
+      - name: Publish to npm
+        run: npm publish
