@@ -1,6 +1,27 @@
 # Changelog
 
 
+## v1.0.1
+
+[compare changes](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/compare/v1.0.0...v1.0.1)
+
+### 🩹 Fixes
+
+- **ci:** Ignore generated changelog in publish ([966dfe5](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/966dfe5))
+- **theme:** Render diff pill outside headings ([9e39d94](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/9e39d94))
+
+### 🏡 Chore
+
+- **dev:** Add minimal docusaurus playground ([8a182ef](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/8a182ef))
+
+### 🤖 CI
+
+- **release:** Integrate publish into release workflow ([280007f](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/280007f))
+
+### ❤️ Contributors
+
+- Takeshi Yaeda ([@yaeda](https://github.com/yaeda))
+
 ## v1.0.0
 
 
