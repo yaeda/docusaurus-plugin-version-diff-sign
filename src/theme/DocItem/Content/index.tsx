@@ -66,7 +66,7 @@ export default function DocItemContent({ children }: { children?: ReactNode }) {
   const titleState = toVisibleState(doc?.titleState);
   const canDecorateH1 =
     pluginData.options.targets.headings &&
-    isConfiguredHeadingLevel(pluginData.options, 1);
+    isConfiguredHeadingLevel(pluginData.options, 1, doc);
   const headingClassName =
     canDecorateH1 && titleState
       ? getVersionDiffClassName('heading', titleState, headingSignOptions.type)

@@ -250,6 +250,7 @@ You can override automatic diff states in a document frontmatter block:
 ```yaml
 ---
 versionDiff:
+  headingLevels: [2]
   page: updated
   headings:
     request-connection-interval-change: none
@@ -257,7 +258,9 @@ versionDiff:
 ---
 ```
 
-Supported values are:
+`versionDiff.headingLevels` accepts an array of heading levels from `1` to `6` and overrides the plugin-level setting for that page.
+
+`versionDiff.page` and each `versionDiff.headings.<headingId>` support these values:
 
 - `auto`
 - `none`

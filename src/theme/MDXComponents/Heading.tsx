@@ -35,7 +35,7 @@ export default function MDXHeading(props: HeadingProps) {
     !currentDoc ||
     !pluginData.options.targets.headings ||
     !headingLevel ||
-    !isConfiguredHeadingLevel(pluginData.options, headingLevel)
+    !isConfiguredHeadingLevel(pluginData.options, headingLevel, currentDoc)
   ) {
     return <Heading {...props} />;
   }
