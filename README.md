@@ -28,6 +28,43 @@ With the default renderer:
 - sidebar items render dots
 - TOC entries render dots
 
+## Local Development
+
+This repository includes a minimal Docusaurus site under
+`examples/minimal-site` so you can verify sign rendering before publishing a
+change.
+
+Install the development dependencies once:
+
+```sh
+pnpm install
+```
+
+Then start the local site:
+
+```sh
+pnpm run dev:site
+```
+
+Useful routes:
+
+- `/docs/guide/start`: automatic heading and TOC diffs
+- `/docs/guide/override`: frontmatter overrides
+- `/docs/guide/new-page`: a page that exists only in the latest version
+
+For CI-style verification, you can also build the site:
+
+```sh
+pnpm run build:site
+```
+
+The development site loads the compiled plugin from `lib`, so rebuild the
+package after plugin changes before refreshing or restarting the site:
+
+```sh
+pnpm run build:package
+```
+
 Example with options:
 This disables TOC signs and changes the built-in sign colors for headings and sidebar items.
 

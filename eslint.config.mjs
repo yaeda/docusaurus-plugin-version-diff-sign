@@ -5,7 +5,14 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 export default tseslint.config(
   {
-    ignores: ['lib/**', 'dist/**', 'node_modules/**', '.npm-cache/**'],
+    ignores: [
+      'lib/**',
+      'dist/**',
+      'node_modules/**',
+      '.npm-cache/**',
+      'examples/minimal-site/.docusaurus/**',
+      'examples/minimal-site/build/**',
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,
@@ -37,11 +44,20 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/*.js', '**/*.mjs'],
+    files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     languageOptions: {
       globals: {
+        console: 'readonly',
+        module: 'readonly',
         process: 'readonly',
+        require: 'readonly',
       },
+    },
+  },
+  {
+    files: ['**/*.cjs'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
     },
   },
   eslintConfigPrettier,
