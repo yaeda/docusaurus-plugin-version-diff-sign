@@ -34,13 +34,15 @@ function getDocHeadingLevels(
   current: DocSnapshot,
   defaultHeadingLevels: number[],
 ): number[] {
-  const configuredHeadingLevels = current.frontMatter.versionDiff?.headingLevels;
+  const configuredHeadingLevels =
+    current.frontMatter.versionDiff?.headingLevels;
 
   if (!Array.isArray(configuredHeadingLevels)) {
     return defaultHeadingLevels;
   }
 
-  const frontMatterHeadingLevels = configuredHeadingLevels.filter(isHeadingLevel);
+  const frontMatterHeadingLevels =
+    configuredHeadingLevels.filter(isHeadingLevel);
   return normalizeHeadingLevels(frontMatterHeadingLevels);
 }
 
