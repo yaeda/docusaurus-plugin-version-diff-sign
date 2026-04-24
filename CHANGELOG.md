@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v1.0.2
+
+[compare changes](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/compare/v1.0.1...v1.0.2)
+
+### 🩹 Fixes
+
+- **package:** Declare MIT license ([9ee9b44](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/9ee9b44))
+
+### ❤️ Contributors
+
+- Takeshi Yaeda ([@yaeda](https://github.com/yaeda))
+
 ## v1.0.1
 
 [compare changes](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/compare/v1.0.0...v1.0.1)
