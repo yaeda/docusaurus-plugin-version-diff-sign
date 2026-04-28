@@ -29,4 +29,28 @@ describe('getRelevantVersions', () => {
       },
     });
   });
+
+  it('derives localized versioned docs directories when provided', async () => {
+    const localizedVersionedDocsDir = path.join(
+      fixtureRoot,
+      'i18n',
+      'ja',
+      'docusaurus-plugin-content-docs',
+    );
+    const versions = await getRelevantVersions({
+      paths: {
+        versionsFile: path.join(fixtureRoot, 'versions.json'),
+        versionedDocsDir: path.join(fixtureRoot, 'versioned_docs'),
+        localizedVersionedDocsDir,
+        versionDirPrefix: 'version-',
+      },
+    });
+
+    expect(versions.current.localizedDocsDir).toBe(
+      path.join(localizedVersionedDocsDir, 'version-2.0.0'),
+    );
+    expect(versions.previous?.localizedDocsDir).toBe(
+      path.join(localizedVersionedDocsDir, 'version-1.0.0'),
+    );
+  });
 });

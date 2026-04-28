@@ -11,6 +11,11 @@ import type {
 
 interface PluginContext {
   siteDir: string;
+  localizationDir?: string;
+  i18n?: {
+    currentLocale: string;
+    localeConfigs: Record<string, { translate?: boolean }>;
+  };
 }
 
 interface ContentLoadedActions {
@@ -36,19 +41,44 @@ const clientStylesPath = path.join(packageDir, 'client', 'styles.css');
 const defaultMetadataFilePath = (siteDir: string) =>
   path.resolve(siteDir, '.docusaurus', 'version-diff-metadata.json');
 const defaultRendererPath = path.join(themePath, 'VersionDiffSign', 'index.js');
+const docusaurusDocsPluginI18nDir = 'docusaurus-plugin-content-docs';
+
+function getLocalizedVersionedDocsDir(
+  context: PluginContext,
+): string | undefined {
+  const localeConfig = context.i18n
+    ? context.i18n.localeConfigs[context.i18n.currentLocale]
+    : undefined;
+
+  if (!context.localizationDir || !localeConfig?.translate) {
+    return undefined;
+  }
+
+  return path.join(context.localizationDir, docusaurusDocsPluginI18nDir);
+}
 
 export default function versionDiffPlugin(
   context: PluginContext,
   userOptions: PluginUserOptions = {},
 ) {
   const options = normalizeOptions(context.siteDir, userOptions);
+  const localizedVersionedDocsDir = getLocalizedVersionedDocsDir(context);
+  const metadataOptions: typeof options = localizedVersionedDocsDir
+    ? {
+        ...options,
+        paths: {
+          ...options.paths,
+          localizedVersionedDocsDir,
+        },
+      }
+    : options;
   const metadataFilePath = defaultMetadataFilePath(context.siteDir);
 
   return {
     name: PLUGIN_NAME,
     async loadContent() {
       const startedAt = performance.now();
-      const metadata = await generateDiffMetadata(options);
+      const metadata = await generateDiffMetadata(metadataOptions);
 
       await writeMetadataFile(metadataFilePath, metadata);
       const durationMs = performance.now() - startedAt;
@@ -72,10 +102,16 @@ export default function versionDiffPlugin(
       return [clientStylesPath];
     },
     getPathsToWatch() {
-      return [
+      const pathsToWatch = [
         `${options.paths.versionedDocsDir}/**/*.{md,mdx}`,
         options.paths.versionsFile,
       ];
+
+      if (localizedVersionedDocsDir) {
+        pathsToWatch.push(`${localizedVersionedDocsDir}/**/*.{md,mdx}`);
+      }
+
+      return pathsToWatch;
     },
     configureWebpack() {
       return {

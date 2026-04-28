@@ -20,7 +20,7 @@ const config = {
     'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%2300554a%22/><path d=%22M18 33h12l6-14h10L34 45H24l6-12H18z%22 fill=%22%23fff%22/></svg>',
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'ja'],
   },
   presets: [
     [
@@ -30,7 +30,7 @@ const config = {
           path: 'docs',
           routeBasePath: 'docs',
           sidebarPath: './sidebars.js',
-          disableVersioning: true,
+          includeCurrentVersion: false,
         },
         blog: false,
         theme: {
@@ -65,6 +65,14 @@ const config = {
           to: '/docs/guide/start',
           label: 'Docs',
           position: 'left',
+        },
+        {
+          type: 'docsVersionDropdown',
+          position: 'right',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
       ],
     },

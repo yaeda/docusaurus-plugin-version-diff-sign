@@ -25,6 +25,7 @@ export interface PluginPathOptions {
 
 export interface InternalPathsOptions extends PluginPathOptions {
   versionedDocsDir: string;
+  localizedVersionedDocsDir?: string;
   versionsFile: string;
   versionDirPrefix: string;
 }
@@ -75,6 +76,7 @@ export interface VersionDiffFrontMatter {
 export interface VersionInfo {
   name: string;
   docsDir: string;
+  localizedDocsDir?: string;
   permalinkVersionSegment: string;
 }
 
