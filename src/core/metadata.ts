@@ -15,27 +15,53 @@ async function loadVersionSnapshots(
   options: NormalizedPluginOptions,
   cache: ParseCache,
 ): Promise<DocSnapshot[]> {
-  if (!version || !(await pathExists(version.docsDir))) {
+  if (!version) {
     return [];
   }
+  const targetVersion = version;
 
-  const files = await listMarkdownFiles(version.docsDir);
-  const snapshots = [];
-
-  for (const filePath of files) {
-    const cached = await cache.get(filePath);
-
-    if (cached) {
-      snapshots.push(cached);
-      continue;
+  async function loadSnapshotsFromDir(docsDir: string): Promise<DocSnapshot[]> {
+    if (!(await pathExists(docsDir))) {
+      return [];
     }
 
-    const snapshot = await parseDocSnapshot(filePath, version);
-    await cache.set(filePath, snapshot);
-    snapshots.push(snapshot);
+    const files = await listMarkdownFiles(docsDir);
+    const snapshots = [];
+
+    for (const filePath of files) {
+      const cached = await cache.get(filePath);
+
+      if (cached) {
+        snapshots.push(cached);
+        continue;
+      }
+
+      const snapshot = await parseDocSnapshot(filePath, {
+        name: targetVersion.name,
+        docsDir,
+      });
+      await cache.set(filePath, snapshot);
+      snapshots.push(snapshot);
+    }
+
+    return snapshots;
   }
 
-  return snapshots;
+  const snapshotsById = new Map<string, DocSnapshot>();
+
+  for (const snapshot of await loadSnapshotsFromDir(targetVersion.docsDir)) {
+    snapshotsById.set(snapshot.unversionedId, snapshot);
+  }
+
+  if (targetVersion.localizedDocsDir) {
+    for (const snapshot of await loadSnapshotsFromDir(
+      targetVersion.localizedDocsDir,
+    )) {
+      snapshotsById.set(snapshot.unversionedId, snapshot);
+    }
+  }
+
+  return [...snapshotsById.values()];
 }
 
 export async function generateDiffMetadata(

@@ -14,7 +14,10 @@ function toVersionDir(
 export async function getRelevantVersions(options: {
   paths: Pick<
     InternalPathsOptions,
-    'versionsFile' | 'versionedDocsDir' | 'versionDirPrefix'
+    | 'localizedVersionedDocsDir'
+    | 'versionsFile'
+    | 'versionedDocsDir'
+    | 'versionDirPrefix'
   >;
 }): Promise<{ current: VersionInfo; previous?: VersionInfo }> {
   if (!(await pathExists(options.paths.versionsFile))) {
@@ -42,6 +45,13 @@ export async function getRelevantVersions(options: {
       options.paths.versionDirPrefix,
       currentVersionName,
     ),
+    ...(options.paths.localizedVersionedDocsDir && {
+      localizedDocsDir: toVersionDir(
+        options.paths.localizedVersionedDocsDir,
+        options.paths.versionDirPrefix,
+        currentVersionName,
+      ),
+    }),
     permalinkVersionSegment: '',
   };
 
@@ -53,6 +63,13 @@ export async function getRelevantVersions(options: {
           options.paths.versionDirPrefix,
           previousVersionName,
         ),
+        ...(options.paths.localizedVersionedDocsDir && {
+          localizedDocsDir: toVersionDir(
+            options.paths.localizedVersionedDocsDir,
+            options.paths.versionDirPrefix,
+            previousVersionName,
+          ),
+        }),
         permalinkVersionSegment: previousVersionName,
       }
     : undefined;
