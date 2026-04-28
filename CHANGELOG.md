@@ -1,6 +1,23 @@
 # Changelog
 
 
+## v1.0.3
+
+[compare changes](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/compare/v1.0.2...v1.0.3)
+
+### 🩹 Fixes
+
+- Use localized docs for diff metadata ([177bcac](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/177bcac))
+
+### ✅ Tests
+
+- **example:** Add i18n versioned dev site ([f8494b3](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/f8494b3))
+- Cover localized docs metadata ([b2327b1](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/commit/b2327b1))
+
+### ❤️ Contributors
+
+- Takeshi Yaeda ([@yaeda](https://github.com/yaeda))
+
 ## v1.0.2
 
 [compare changes](https://github.com/yaeda/docusaurus-plugin-version-diff-sign/compare/v1.0.1...v1.0.2)

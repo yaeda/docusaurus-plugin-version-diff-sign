@@ -1,6 +1,6 @@
 {
   "name": "docusaurus-plugin-version-diff-sign",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Adds version diff signs to Docusaurus docs headings, sidebar items, and table of contents entries.",
   "license": "MIT",
   "homepage": "https://github.com/yaeda/docusaurus-plugin-version-diff-sign#readme",
