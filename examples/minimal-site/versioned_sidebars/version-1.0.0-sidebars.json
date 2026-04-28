@@ -1,0 +1,12 @@
+{
+  "docsSidebar": [
+    {
+      "type": "doc",
+      "id": "guide/start"
+    },
+    {
+      "type": "doc",
+      "id": "guide/override"
+    }
+  ]
+}

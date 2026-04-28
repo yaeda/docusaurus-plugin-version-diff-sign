@@ -1,0 +1,16 @@
+{
+  "docsSidebar": [
+    {
+      "type": "doc",
+      "id": "guide/start"
+    },
+    {
+      "type": "doc",
+      "id": "guide/override"
+    },
+    {
+      "type": "doc",
+      "id": "guide/new-page"
+    }
+  ]
+}
